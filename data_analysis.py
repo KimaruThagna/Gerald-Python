@@ -3,9 +3,9 @@ import datetime as dt
 covid_india_df = pd.read_csv('csv/covid_19_india.csv')
 vaccine_df = pd.read_csv('csv/covid_vaccine_statewise.csv')
 # preliminary inspection of the data 
-# print(covid_india_df.tail(10))
-# print(covid_india_df.describe())
-# print(vaccine_df.head(10))
+print(covid_india_df.tail(10))
+print(covid_india_df.describe())
+print(vaccine_df.head(10))
 
 # data preprocessing for possible missing values
 columns = ["ConfirmedIndianNational", "ConfirmedForeignNational", "Cured", "Deaths", "Confirmed"]
@@ -21,9 +21,9 @@ df_2020 = covid_india_df[covid_india_df['Date'].dt.year == 2020]
 df_2020['Month'] = pd.to_datetime(df_2020['Date']).dt.month
 grouped_by_month = df_2020.groupby(['Month']).sum()['Confirmed']
 # check grouping
-#print(grouped_by_month)
+print(grouped_by_month)
 # save to CSV
-#grouped_by_month.to_csv('output/monthwise_total_confirmed.csv')
+grouped_by_month.to_csv('output/monthwise_total_confirmed.csv')
 
 
 #q2 total death per state and whole country in 2020
@@ -64,6 +64,8 @@ highest_confirmed_2021 = df_2021['Confirmed']
 
 print(highest_confirmed_2020)
 print("Highest confirmed 2021 >>>>>>>>>>>>>>>>>>>>>>>>>>>")
+
+
 #q5 monthwise total male vaccinated in every state and also total covid cases per state for 2021
 # covid cases per state per month
 grouped_by_month_2021_cases = df_2021.groupby(['Month','State/UnionTerritory']).sum()['Confirmed']
