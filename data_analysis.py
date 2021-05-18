@@ -58,3 +58,9 @@ highest_confirmed_2021 = df_2021['Confirmed']
 print(highest_confirmed_2020)
 
 #q5 monthwise total male vaccinated in every state and also total covid cases per state for 2021
+# covid cases per state per month
+grouped_by_month_2021_cases = df_2021.groupby(['Month','State/UnionTerritory']).sum()['Confirmed']
+# vaccine data
+df_2021 = vaccine_df[vaccine_df['Updated On'].dt.year == 2021]
+df_2021['Month'] = pd.to_datetime(df_2021['Date']).dt.month
+grouped_by_month_state_2021_maleVaccinated = df_2021.groupby(['Month','State']).sum()['Male(Individuals Vaccinated)']
