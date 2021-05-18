@@ -21,6 +21,40 @@ df_2020 = covid_india_df[covid_india_df['Date'].dt.year == 2020]
 df_2020['Month'] = pd.to_datetime(df_2020['Date']).dt.month
 grouped_by_month = df_2020.groupby(['Month']).sum()['Confirmed']
 # check grouping
-print(grouped_by_month)
+#print(grouped_by_month)
+# save to CSV
+#grouped_by_month.to_csv('output/monthwise_total_confirmed.csv')
 
-#q2 
+
+#q2 total death per state and whole country in 2020
+grouped_by_state = df_2020.groupby(['State/UnionTerritory']).sum()['Deaths']
+total_death_at_country_level = grouped_by_state.sum()
+
+# grouped_by_state.append(pd.DataFrame(['Sum_Total_for_Country',total_death_at_country_level],
+#                         columns=['State/UnionTerritory','Deaths']) )
+
+# check results
+print(grouped_by_state.tail(10))
+
+#q3 average covid cases for all states in april 2020 and 2021
+df_2021 = covid_india_df[covid_india_df['Date'].dt.year == 2021]
+df_2021['Month'] = pd.to_datetime(df_2021['Date']).dt.month
+
+grouped_by_month_2020 = df_2020.groupby(['Month','State/UnionTerritory']).mean()
+grouped_by_month_2021 = df_2021.groupby(['Month','State/UnionTerritory']).mean()
+
+april_averages  = grouped_by_month_2020.loc[grouped_by_month_2020['Month'] == "4"]
+april_averages_2021  = grouped_by_month_2021.loc[grouped_by_month_2021['Month'] == "4"]
+
+
+#q4 date with highest covid cases in 2020 and 2021
+#set date to be the index
+df_2020.set_index('Date',drop=False)
+df_2021.set_index('Date',drop=False)
+# highest confirmed cases
+highest_confirmed_2020 = df_2020['Confirmed']
+highest_confirmed_2021 = df_2021['Confirmed']
+
+print(highest_confirmed_2020)
+
+#q5 monthwise total male vaccinated in every state and also total covid cases per state for 2021
